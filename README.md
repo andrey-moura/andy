@@ -10,10 +10,11 @@ The actual value to be set is a global constexpr called `uva_debug_level` define
 ### Level summary
 > **_NOTE:_**  The Level are an hierarchy. Level 1 contains level 0, level 2 contains level 1 & 0, and so on.
 
-| LEVEL | Description                                    | On Failure
+| LEVEL | Description                                    | Output
 |-------|------------------------------------------------|-----------------------------------|
-| 0     | Release, no extra checks                       | -
+| 0     | Release, no extra checks                       | exception
 | 1     | Debug, integral types checks (char, int, bool) | log_warning
+| 1     | Debug, useful if you're contributing to uva    | log_warning,clog
 
 ### Checks summary
 
