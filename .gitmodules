@@ -1,0 +1,24 @@
+[submodule "include/core"]
+	path = include/core
+	url = https://github.com/Moonslate/core.git
+[submodule "include/cspec"]
+	path = include/cspec
+	url = https://github.com/Moonslate/cspec.git
+[submodule "include/console"]
+	path = include/console
+	url = https://github.com/Moonslate/console.git
+[submodule "include/string"]
+	path = include/string
+	url = https://github.com/Moonslate/string.git
+[submodule "include/diagnostics"]
+	path = include/diagnostics
+	url = https://github.com/Moonslate/diagnostics.git
+[submodule "include/routing"]
+	path = include/routing
+	url = https://github.com/Moonslate/routing.git
+[submodule "include/faker"]
+	path = include/faker
+	url = https://github.com/Moonslate/faker.git
+[submodule "include/binary"]
+	path = include/binary
+	url = https://github.com/Moonslate/binary.git
