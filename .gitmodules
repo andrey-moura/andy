@@ -25,3 +25,6 @@
 [submodule "include/networking"]
 	path = include/networking
 	url = https://github.com/Moonslate/networking.git
+[submodule "include/json"]
+	path = include/json
+	url = https://github.com/Moonslate/json.git
