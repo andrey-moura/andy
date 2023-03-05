@@ -22,3 +22,6 @@
 [submodule "include/binary"]
 	path = include/binary
 	url = https://github.com/Moonslate/binary.git
+[submodule "include/networking"]
+	path = include/networking
+	url = https://github.com/Moonslate/networking.git
