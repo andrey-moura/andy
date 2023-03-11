@@ -10,16 +10,26 @@ find_package(Threads)
 # binary, networking
 find_package(OpenSSL)
 
-# cspec must be included before ALL projects
-include("include/cspec/CMakeLists.txt")
-include("include/console/CMakeLists.txt")
-include("include/debugger/CMakeLists.txt")
-include("include/networking/CMakeLists.txt")
-include("include/binary/CMakeLists.txt")
-include("include/faker/CMakeLists.txt")
-include("include/routing/CMakeLists.txt")
-include("include/string/CMakeLists.txt")
-include("include/diagnostics/CMakeLists.txt")
-include("include/core/CMakeLists.txt")
+set(UVA_ROOT_DIR ${CMAKE_CURRENT_LIST_DIR})
 
-include_directories(include/)
+# cspec must be included before ALL projects
+include("${CMAKE_CURRENT_LIST_DIR}/include/cspec/CMakeLists.txt")
+include("${CMAKE_CURRENT_LIST_DIR}/include/console/CMakeLists.txt")
+include("${CMAKE_CURRENT_LIST_DIR}/include/networking/CMakeLists.txt")
+include("${CMAKE_CURRENT_LIST_DIR}/include/json/CMakeLists.txt")
+include("${CMAKE_CURRENT_LIST_DIR}/include/binary/CMakeLists.txt")
+include("${CMAKE_CURRENT_LIST_DIR}/include/file/CMakeLists.txt")
+include("${CMAKE_CURRENT_LIST_DIR}/include/faker/CMakeLists.txt")
+include("${CMAKE_CURRENT_LIST_DIR}/include/routing/CMakeLists.txt")
+include("${CMAKE_CURRENT_LIST_DIR}/include/string/CMakeLists.txt")
+include("${CMAKE_CURRENT_LIST_DIR}/include/diagnostics/CMakeLists.txt")
+include("${CMAKE_CURRENT_LIST_DIR}/include/core/CMakeLists.txt")
+
+include("${CMAKE_CURRENT_LIST_DIR}/include/networking/networking.cmake")
+
+if(PROJECT_IS_TOP_LEVEL)
+  message(STATUS "We're building uva. The project has been included.")
+  include("${CMAKE_CURRENT_LIST_DIR}/uva/CMakeLists.txt")
+endif()
+
+include_directories(${CMAKE_CURRENT_LIST_DIR}/include/)
