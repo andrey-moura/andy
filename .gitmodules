@@ -28,3 +28,6 @@
 [submodule "include/json"]
 	path = include/json
 	url = https://github.com/Moonslate/json.git
+[submodule "include/file"]
+	path = include/file
+	url = https://github.com/andrey-moura/file
