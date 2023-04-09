@@ -31,3 +31,6 @@
 [submodule "include/file"]
 	path = include/file
 	url = https://github.com/andrey-moura/file
+[submodule "include/wx"]
+	path = include/wx
+	url = https://github.com/andrey-moura/wx
