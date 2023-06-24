@@ -42,6 +42,7 @@ juice("core")
 juice("drawing")
 juice("wx")
 juice("job")
+juice("database")
 
 if(PROJECT_IS_TOP_LEVEL)
   message(STATUS "We're building uva. The project has been included.")
