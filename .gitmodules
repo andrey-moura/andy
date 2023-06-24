@@ -34,3 +34,6 @@
 [submodule "include/wx"]
 	path = include/wx
 	url = https://github.com/andrey-moura/wx
+[submodule "include/database"]
+	path = include/database
+	url = https://github.com/andrey-moura/database
