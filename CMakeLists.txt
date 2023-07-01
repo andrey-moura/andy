@@ -13,10 +13,17 @@ find_package(OpenSSL)
 set(UVA_ROOT_DIR ${CMAKE_CURRENT_LIST_DIR})
 
 macro (juice juice_name)
-    set(juice_path "${CMAKE_CURRENT_LIST_DIR}/include/${juice_name}/CMakeLists.txt")
+    set(juice_folder "${CMAKE_CURRENT_LIST_DIR}/include/${juice_name}")
+    set(juice_path "${juice_folder}/CMakeLists.txt")
     if(EXISTS "${juice_path}")
         message("Found juice ${juice_name} at: ${juice_path}")
         include("${juice_path}")
+
+	message(STATUS "Configuring all submodules as devlopment")
+	execute_process (
+	    COMMAND bash -c "git -C '${juice_folder}' submodule foreach 'git checkout development'"
+	    OUTPUT_VARIABLE outVar
+	)
     endif()
 endmacro ()
 
@@ -34,6 +41,7 @@ juice("diagnostics")
 juice("core")
 juice("drawing")
 juice("wx")
+juice("job")
 
 if(PROJECT_IS_TOP_LEVEL)
   message(STATUS "We're building uva. The project has been included.")
