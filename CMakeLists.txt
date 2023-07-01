@@ -19,7 +19,7 @@ macro (juice juice_name)
         message("Found juice ${juice_name} at: ${juice_path}")
         include("${juice_path}")
 
-	message(STATUS "Configuring all submodules as devlopment")
+	message(STATUS "Configuring all submodules as development")
 	execute_process (
 	    COMMAND bash -c "git -C '${juice_folder}' submodule foreach 'git checkout development'"
 	    OUTPUT_VARIABLE outVar
