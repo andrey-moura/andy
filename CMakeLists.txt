@@ -30,10 +30,10 @@ macro (juice juice_name)
 
         message(STATUS "Configuring all submodules as ${UVA_ENV}")
 
-        execute_process (
-            COMMAND bash -c "git -C '${juice_folder}' submodule foreach 'git checkout ${UVA_ENV}'"
-            OUTPUT_VARIABLE outVar
-        )
+        # execute_process (
+        #     COMMAND bash -c "git -C '${juice_folder}' submodule foreach 'git checkout ${UVA_ENV}'"
+        #     OUTPUT_VARIABLE outVar
+        # )
     endif()
 endmacro ()
 
