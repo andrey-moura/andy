@@ -37,3 +37,6 @@
 [submodule "include/database"]
 	path = include/database
 	url = git@github.com:andrey-moura/database.git
+[submodule "include/time"]
+	path = include/time
+	url = git@github.com:andrey-moura/time.git
