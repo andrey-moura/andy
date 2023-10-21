@@ -52,6 +52,7 @@ juice("core")
 juice("drawing")
 juice("wx")
 juice("job")
+juice("time")
 juice("database")
 
 if(PROJECT_IS_TOP_LEVEL)
