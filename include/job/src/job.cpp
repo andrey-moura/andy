@@ -24,7 +24,7 @@ std::string uva::job::basic_job::command(var args)
         size_t to_reserve = 1024;
         cmd.reserve(to_reserve);
 
-        auto& map = args.as<var::var_type::map>();
+        auto& map = args.as<var::map>();
 
         for(auto& pair : map)
         {
