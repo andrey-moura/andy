@@ -8,7 +8,7 @@ uva::job::basic_job::basic_job(const std::string &__name)
     : name(__name)
 {
     std::string executable = uva::string::replace(name, '_', '-');
-    m_command = std::filesystem::current_path() / executable;
+    m_command = (std::filesystem::current_path() / executable).string();
 }
 
 std::string uva::job::basic_job::command(var args)
@@ -50,7 +50,7 @@ int uva::job::basic_job::perform_async(var args)
 #ifdef __linux__
     cmd += " &";
 #else
-    static_assert(false, "error: uva::job::basic_job::perform_async not implemented for current platform");
+    throw std::logic_error("uva::job::basic_job::perform_async not implemented for current platform");
 #endif
 
     return system(cmd.c_str());
