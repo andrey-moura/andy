@@ -28,13 +28,17 @@
 #endif
 
 #if __UVA_DEBUG_LEVEL__ > 0
-    #include <console.hpp>
+    #if __has_include(<console.hpp>)
+    #   include <console.hpp>
+    #endif
 
     template<int level>
     inline void UVA_CHECK_FAILED_F(const std::string& name, const std::string& file, const size_t line)
     {
         if constexpr (level == 1) {
-            uva::console::log_warning("CHECK FAILED: {} (level {}) at file {}:{}", name, level, file, line);
+            #if __has_include(<console.hpp>)
+                uva::console::log_warning("CHECK FAILED: {} (level {}) at file {}:{}", name, level, file, line);
+            #endif
         }
     }
 #else
