@@ -4,7 +4,7 @@
 
 #include <console.hpp>
 #include <file.hpp>
-#include <core.hpp>
+#include <uva/core.hpp>
 
 void application_controller::init()
 {
