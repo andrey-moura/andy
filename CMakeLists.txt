@@ -92,6 +92,9 @@ include_directories(${CMAKE_CURRENT_LIST_DIR}/include/)
 file(GLOB UVA_RESOURCES "${CMAKE_SOURCE_DIR}/uva-resources/*")
 
 foreach(file ${UVA_RESOURCES})
-    configure_file(${file} ${CMAKE_BINARY_DIR} COPYONLY)
+    if(WIN32)
+        configure_file(${file} ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE} COPYONLY)
+    else()
+        configure_file(${file} ${CMAKE_BINARY_DIR} COPYONLY)
+    endif()
 endforeach()
-
