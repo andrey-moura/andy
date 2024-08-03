@@ -86,3 +86,12 @@ macro (juice juice_name_)
 endmacro ()
 
 include_directories(${CMAKE_CURRENT_LIST_DIR}/include/)
+
+# Copy the folder src/icons to the build directory
+
+file(GLOB UVA_RESOURCES "${CMAKE_SOURCE_DIR}/uva-resources/*")
+
+foreach(file ${UVA_RESOURCES})
+    configure_file(${file} ${CMAKE_BINARY_DIR} COPYONLY)
+endforeach()
+
