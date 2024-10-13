@@ -55,3 +55,12 @@
 
 UVA_GENERATE_CHECK(UVA_CHECK_RESERVED_BUFFER, 1, UVA_GENERATE_CHECK_PARAMS(const std::string& buffer, size_t len), if(buffer.size() > len) { UVA_CHECK_FAILED(1, "UVA_CHECK_RESERVED_BUFFER") })
 #define UVA_CHECK_RESERVED_BUFFER(buffer, len) UVA_CHECK_RESERVED_BUFFER_F(buffer, len, __FILE__, __LINE__);
+
+namespace uva
+{
+    template <auto left, auto right, typename = void>
+        struct function_is_same : std::false_type {};
+
+    template <auto left, auto right>
+        struct function_is_same<left, right, std::enable_if_t<left == right>> : std::true_type {};
+};
