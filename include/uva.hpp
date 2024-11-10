@@ -27,6 +27,10 @@
     #define __UVA_CPP20__
 #endif
 
+#if __cplusplus >= 201703L
+    #define __UVA_CPP17__
+#endif
+
 #if __UVA_OVERRIDE_DEBUG_LEVEL__ > 0
     constexpr size_t uva_debug_level = __UVA_OVERRIDE_DEBUG_LEVEL__;
     #define __UVA_DEBUG_LEVEL__ __UVA_OVERRIDE_DEBUG_LEVEL__
