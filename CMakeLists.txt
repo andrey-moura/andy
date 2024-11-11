@@ -10,6 +10,8 @@ find_package(Threads)
 # binary, networking
 find_package(OpenSSL)
 
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D__UVA_DEBUG__")
+
 set(UVA_ROOT_DIR ${CMAKE_CURRENT_LIST_DIR})
 
 IF(DEFINED ENV{UVA_ENV})
