@@ -8,9 +8,12 @@
 #ifdef NDEBUG
     #undef __UVA_DEBUG__
     #define __UVA_DEBUG_LEVEL_DEFAULT__ 0
-#else
-    #define __UVA_DEBUG__ 1
+#endif
+
+#ifdef __UVA_DEBUG__
     #define __UVA_DEBUG_LEVEL_DEFAULT__ 1
+#else
+    #define __UVA_DEBUG_LEVEL_DEFAULT__ 0
 #endif
 
 #ifdef _MSC_VER 
