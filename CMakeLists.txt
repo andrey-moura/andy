@@ -47,7 +47,7 @@ macro (uva_library uva_library_name)
         message(STATUS "uva_library ${uva_library_name} not found at '${UVA_PROJECT_FOLDER}/${uva_library_path}'. Will submodule it at '${uva_library_folder}'...")
         
         execute_process (
-            COMMAND git submodule add --force git@github.com:andrey-moura/${uva_library_name}.git ${uva_library_folder}
+            COMMAND git submodule add --force https://github.com/andrey-moura/${uva_library_name}.git ${uva_library_folder}
             WORKING_DIRECTORY ${UVA_PROJECT_FOLDER}
             OUTPUT_VARIABLE git_log
             RESULT_VARIABLE git_result
