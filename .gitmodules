@@ -1,0 +1,18 @@
+[submodule "include/core"]
+	path = include/core
+	url = https://github.com/andrey-moura/core
+[submodule "include/string"]
+	path = include/string
+	url = https://github.com/andrey-moura/core
+[submodule "include/json"]
+	path = include/json
+	url = https://github.com/andrey-moura/core
+[submodule "include/file"]
+	path = include/file
+	url = https://github.com/andrey-moura/core
+[submodule "include/console"]
+	path = include/console
+	url = https://github.com/andrey-moura/core
+[submodule "include/binary"]
+	path = include/binary
+	url = https://github.com/andrey-moura/core
