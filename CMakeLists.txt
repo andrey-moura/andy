@@ -1,6 +1,8 @@
 #Require a minimum version
 cmake_minimum_required(VERSION 3.16)
 
+set(CMAKE_CXX_STANDARD 20)
+
 project(uva)
 
 # Commum libs
@@ -21,9 +23,14 @@ macro (uva_library uva_library_name)
 endmacro ()
 
 uva_library(core)
+uva_library(string)
+uva_library(json)
+uva_library(file)
+uva_library(console)
+uva_library(binary)
 
 include_directories(${CMAKE_CURRENT_LIST_DIR}/include/)
-
+include_directories(${CMAKE_CURRENT_LIST_DIR}/include/fmt/include)
 # Copy the folder src/icons to the build directory
 
 file(GLOB UVA_RESOURCES "${CMAKE_SOURCE_DIR}/uva-resources/*")
