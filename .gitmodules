@@ -3,19 +3,19 @@
 	url = https://github.com/andrey-moura/core
 [submodule "include/string"]
 	path = include/string
-	url = https://github.com/andrey-moura/core
+	url = https://github.com/andrey-moura/string
 [submodule "include/json"]
 	path = include/json
-	url = https://github.com/andrey-moura/core
+	url = https://github.com/andrey-moura/json
 [submodule "include/file"]
 	path = include/file
-	url = https://github.com/andrey-moura/core
+	url = https://github.com/andrey-moura/file
 [submodule "include/console"]
 	path = include/console
-	url = https://github.com/andrey-moura/core
+	url = https://github.com/andrey-moura/console
 [submodule "include/binary"]
 	path = include/binary
-	url = https://github.com/andrey-moura/core
+	url = https://github.com/andrey-moura/binary
 [submodule "include/fmt"]
 	path = include/fmt
 	url = https://github.com/fmtlib/fmt.git
