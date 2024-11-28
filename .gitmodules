@@ -16,3 +16,6 @@
 [submodule "include/binary"]
 	path = include/binary
 	url = https://github.com/andrey-moura/core
+[submodule "include/fmt"]
+	path = include/fmt
+	url = https://github.com/fmtlib/fmt.git
