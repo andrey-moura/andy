@@ -29,6 +29,17 @@ include(${UVA_MACROS_CMAKE})
 # uva_library(binary)
 # uva_library(uva-tests)
 
+# FMT is mandatory under Linux
+if(UNIX)
+    execute_process(
+        COMMAND git submodule update include/fmt
+        WORKING_DIRECTORY ${UVA_ROOT_DIR}
+        RESULT_VARIABLE RESULT
+        OUTPUT_VARIABLE OUTPUT
+        ERROR_VARIABLE ERROR
+    )
+endif()
+
 include_directories(${CMAKE_CURRENT_LIST_DIR}/include/)
 include_directories(${CMAKE_CURRENT_LIST_DIR}/include/fmt/include)
 # Copy the folder src/icons to the build directory
