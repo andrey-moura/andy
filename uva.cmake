@@ -1,7 +1,7 @@
 macro (uva_library uva_library_name)
     set(LIBRARY_FOLDER ${UVA_ROOT_DIR}/include/${uva_library_name})
     
-    if(NOT EXISTS ${LIBRARY_FOLDER})
+    if(NOT EXISTS ${LIBRARY_FOLDER}/CMakeLists.txt)
         execute_process(
             COMMAND git submodule update include/${uva_library_name}
             WORKING_DIRECTORY ${UVA_ROOT_DIR}
