@@ -15,19 +15,19 @@ find_package(OpenSSL)
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D__UVA_DEBUG__")
 
 set(UVA_ROOT_DIR ${CMAKE_CURRENT_LIST_DIR})
+set(UVA_MACROS_CMAKE ${UVA_ROOT_DIR}/uva.cmake)
 
 set(UVA_PROJECT_FOLDER ${CMAKE_SOURCE_DIR})
 
-macro (uva_library uva_library_name)
-    include(${CMAKE_CURRENT_LIST_DIR}/include/${uva_library_name}/CMakeLists.txt)
-endmacro ()
+include(${UVA_MACROS_CMAKE})
 
-uva_library(core)
-uva_library(string)
-uva_library(json)
-uva_library(file)
-uva_library(console)
-uva_library(binary)
+# uva_library(core)
+# uva_library(string)
+# uva_library(json)
+# uva_library(file)
+# uva_library(console)
+# uva_library(binary)
+# uva_library(uva-tests)
 
 include_directories(${CMAKE_CURRENT_LIST_DIR}/include/)
 include_directories(${CMAKE_CURRENT_LIST_DIR}/include/fmt/include)
