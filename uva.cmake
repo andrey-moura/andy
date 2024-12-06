@@ -1,4 +1,13 @@
 macro (uva_library uva_library_name)
+
+    execute_process(
+        COMMAND git submodule init
+        WORKING_DIRECTORY ${UVA_ROOT_DIR}
+        RESULT_VARIABLE RESULT
+        OUTPUT_VARIABLE OUTPUT
+        ERROR_VARIABLE ERROR
+    )
+
     set(LIBRARY_FOLDER ${UVA_ROOT_DIR}/include/${uva_library_name})
     
     if(EXISTS ${LIBRARY_FOLDER}/CMakeLists.txt)
