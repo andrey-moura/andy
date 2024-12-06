@@ -29,6 +29,14 @@ include(${UVA_MACROS_CMAKE})
 # uva_library(binary)
 # uva_library(uva-tests)
 
+execute_process(
+    COMMAND git submodule init
+    WORKING_DIRECTORY ${UVA_ROOT_DIR}
+    RESULT_VARIABLE RESULT
+    OUTPUT_VARIABLE OUTPUT
+    ERROR_VARIABLE ERROR
+)
+
 # FMT is mandatory under Linux
 if(UNIX)
     execute_process(
