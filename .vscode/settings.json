@@ -1,5 +1,6 @@
 {
     "files.associations": {
+        "*.uva": "uva",
         "algorithm": "cpp",
         "atomic": "cpp",
         "bit": "cpp",
@@ -89,7 +90,16 @@
         "source_location": "cpp",
         "span": "cpp",
         "strstream": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "hash_map": "cpp",
+        "*.tcc": "cpp",
+        "bitset": "cpp",
+        "cfenv": "cpp",
+        "complex": "cpp",
+        "cwctype": "cpp",
+        "memory_resource": "cpp",
+        "string_view": "cpp",
+        "typeindex": "cpp"
     },
     "cmake.debugConfig": {
         "externalConsole": true
