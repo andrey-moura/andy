@@ -2,7 +2,7 @@ macro (uva_library uva_library_name)
     set(LIBRARY_FOLDER ${UVA_ROOT_DIR}/include/${uva_library_name})
     
     if(EXISTS ${LIBRARY_FOLDER}/CMakeLists.txt)
-        message(STATUS "${LIBRARY_FOLDER}/CMakeLists.txt exists")
+        # message(STATUS "${LIBRARY_FOLDER}/CMakeLists.txt exists")
     else()
         execute_process(
             COMMAND git submodule update include/${uva_library_name}
