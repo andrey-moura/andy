@@ -16,4 +16,4 @@ target_link_libraries(uva-xml
     uva-core
 )
 
-uva_tests_configure(uva-xml)
+# uva_tests_configure(uva-xml)

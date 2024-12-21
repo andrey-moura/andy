@@ -7,65 +7,13 @@
 #include <uva/file.hpp>
 #include <uva/xml.hpp>
 #include <uva/binary.hpp>
-
-#include "layout.hpp"
+#include <uva/widgets.hpp>
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL2_gfxPrimitives.h>
 
 SDL_Renderer* renderer;
-
-void parse_element(uva::xml::schema& schema, view_element* ve, uva::xml& xml) {
-    // For text element
-    text_element* te = dynamic_cast<text_element*>(ve);
-    layout* le = dynamic_cast<layout*>(ve);
-    
-    if(te) {
-        te->style.color = schema.color_attribute(xml, "color");
-        te->style.cursor = (view_element_cursor)schema.integer_attribute(xml, "cursor");
-
-        te->text_style.vertical_alignment   = (text_vertical_alignment)schema.integer_attribute(xml, "vertical-align");
-        te->text_style.horizontal_alignment = (text_horizontal_alignment)schema.integer_attribute(xml, "horizontal-align");
-    } else if(le) {
-        le->layout_style.type = (layout_element_style::layout_type)schema.integer_attribute(xml, "type");
-        le->layout_style.direction = (layout_element_style::layout_flex_direction)schema.integer_attribute(xml, "direction");
-
-        for(auto& child : xml.childrens) {
-            if(child.tag == "text") {
-                std::shared_ptr<text_element> te = std::make_shared<text_element>();
-                te->content = child.content;
-                
-                parse_element(schema, te.get(), child);
-
-                // Get text size
-                TTF_Font* font = TTF_OpenFont("/usr/share/fonts/truetype/abyssinica/AbyssinicaSIL-Regular.ttf", 24);
-
-                if(!font) {
-                    throw std::runtime_error(SDL_GetError());
-                }
-
-                TTF_SizeText(font, te->content.c_str(), &te->w, &te->h);
-                TTF_CloseFont(font);
-
-                le->childreans.push_back(te);
-            } else if(child.tag == "layout") {
-                std::shared_ptr<layout> le2 = std::make_shared<layout>();
-                parse_element(schema, le2.get(), child);
-
-                le->childreans.push_back(le2);
-            }
-        }
-    }
-
-
-    ve->style.background_color = schema.color_attribute(xml, "background-color");
-
-    ve->style.flex = atoi(xml.attribute("flex", "0").data());
-    ve->style.padding = atoi(xml.attribute("padding", "0").data());
-    ve->style.gap = atoi(xml.attribute("gap", "0").data());
-    ve->style.border_radius = atoi(xml.attribute("border-radius", "0").data());
-}
 
 int main(int argc, char* argv[])
 {
@@ -92,7 +40,7 @@ int main(int argc, char* argv[])
     float total_free_time_ms = 0.0;
     std::chrono::milliseconds total_draw_duration = std::chrono::milliseconds(0);
 
-    layout l;
+    uva::widgets::layout l;
 
     while(running) {
         auto frame_start = std::chrono::high_resolution_clock::now();
@@ -133,7 +81,7 @@ int main(int argc, char* argv[])
                         if(xml.tag == "layout") {
                             l.childreans.clear();
 
-                            parse_element(schema, &l, xml);
+                            l.parse(schema, xml);
 
                             l.calculate_layout(0, 0, width, height);
 
@@ -161,7 +109,7 @@ int main(int argc, char* argv[])
 
             // Try to find the element under the mouse
 
-            view_element* element_at_mouse = nullptr;
+            uva::widgets::widget* element_at_mouse = nullptr;
 
             SDL_SystemCursor cursor = SDL_SYSTEM_CURSOR_ARROW;
 
@@ -169,7 +117,7 @@ int main(int argc, char* argv[])
                 if(x >= child->x && x <= child->x + child->w && y >= child->y && y <= child->y + child->h) {
                     element_at_mouse = child.get();
                     
-                    auto le = dynamic_cast<layout*>(child.get());
+                    auto le = dynamic_cast<uva::widgets::layout*>(child.get());
 
                     if(le) {
                         for(auto& child2 : le->childreans) {
@@ -184,7 +132,7 @@ int main(int argc, char* argv[])
 
             if(element_at_mouse) {
                 switch(element_at_mouse->style.cursor) {
-                    case view_element_cursor::view_element_cursor_pointer:
+                    case uva::widgets::widget_cursor::widget_cursor_pointer:
                         cursor = SDL_SYSTEM_CURSOR_HAND;
                         break;
                     default:
@@ -240,7 +188,7 @@ int main(int argc, char* argv[])
     return 0;
 }
 
-void view_element::draw()
+void uva::widgets::widget::draw()
 {
     if(style.background_color.a == 0) {
         return;
@@ -279,58 +227,4 @@ void view_element::draw()
         filledCircleRGBA(renderer, (x - 1) + w - style.border_radius, y + h - style.border_radius, style.border_radius, style.background_color.r, style.background_color.g, style.background_color.b, style.background_color.a);
     }
 
-}
-
-void layout::draw()
-{
-    view_element::draw();
-
-    for(auto& child : childreans) {
-        child->draw();
-    }
-}
-
-void text_element::draw()
-{
-    view_element::draw();
-
-    if(content.size()) {
-        TTF_Font* font = TTF_OpenFont("/usr/share/fonts/truetype/abyssinica/AbyssinicaSIL-Regular.ttf", 24);
-
-        if(!font) {
-            throw std::runtime_error(SDL_GetError());
-        }
-
-        SDL_Color color = { style.color.r, style.color.g, style.color.b, style.color.a };
-        SDL_Surface* surface = TTF_RenderText_Solid(font, content.c_str(), color);
-        SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
-        // Get size of the texture
-        int texture_w, texture_h;
-        SDL_QueryTexture(texture, NULL, NULL, &texture_w, &texture_h);
-        SDL_FreeSurface(surface);
-        SDL_Rect rect = { x, y, texture_w, texture_h };
-        switch(text_style.vertical_alignment) {
-            case text_vertical_alignment::text_vertical_alignment_top:
-                break;
-            case text_vertical_alignment::text_vertical_alignment_center:
-                rect.y += (h - texture_h) / 2;
-                break;
-            case text_vertical_alignment::text_vertical_alignment_bottom:
-                rect.y += h - texture_h;
-                break;
-        }
-        switch(text_style.horizontal_alignment) {
-            case text_horizontal_alignment::text_horizontal_alignment_left:
-                break;
-            case text_horizontal_alignment::text_horizontal_alignment_center:
-                rect.x += (w - texture_w) / 2;
-                break;
-            case text_horizontal_alignment::text_horizontal_alignment_right:
-                rect.x += w - texture_w;
-                break;
-        }
-        SDL_RenderCopy(renderer, texture, NULL, &rect);
-        SDL_DestroyTexture(texture);
-        TTF_CloseFont(font);
-    }
 }
