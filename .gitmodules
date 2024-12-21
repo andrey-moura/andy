@@ -19,3 +19,6 @@
 [submodule "include/fmt"]
 	path = include/fmt
 	url = https://github.com/fmtlib/fmt.git
+[submodule "include/uva-ui"]
+	path = include/uva-ui
+	url = https://github.com/andrey-moura/uva-ui.git
