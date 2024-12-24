@@ -22,3 +22,6 @@
 [submodule "include/uva-ui"]
 	path = include/uva-ui
 	url = https://github.com/andrey-moura/uva-ui.git
+[submodule "include/uva-drawing"]
+	path = include/uva-drawing
+	url = https://github.com/andrey-moura/uva-drawing.git
