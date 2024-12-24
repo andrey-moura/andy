@@ -21,13 +21,17 @@ set(UVA_PROJECT_FOLDER ${CMAKE_SOURCE_DIR})
 
 include(${UVA_MACROS_CMAKE})
 
-# uva_library(core)
-# uva_library(string)
-# uva_library(json)
-# uva_library(file)
-# uva_library(console)
-# uva_library(binary)
-# uva_library(uva-tests)
+if(${PROJECT_IS_TOP_LEVEL})
+    uva_library(core)
+    uva_library(string)
+    uva_library(json)
+    uva_library(file)
+    uva_library(console)
+    uva_library(binary)
+    uva_library(uva-tests)
+    uva_library(uva-drawing)
+    uva_library(uva-widgets)
+endif()
 
 execute_process(
     COMMAND git submodule init
