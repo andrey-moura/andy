@@ -28,3 +28,6 @@
 [submodule "include/uva-widgets"]
 	path = include/uva-widgets
 	url = https://github.com/andrey-moura/uva-widgets.git
+[submodule "include/uva-tests"]
+	path = include/uva-tests
+	url = https://github.com/andrey-moura/uva-tests.git
