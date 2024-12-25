@@ -102,6 +102,6 @@
         "typeindex": "cpp"
     },
     "cmake.debugConfig": {
-        "externalConsole": true
+        "cwd": "${workspaceFolder}"
     }
 }
