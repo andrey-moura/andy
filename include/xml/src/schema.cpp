@@ -1,5 +1,7 @@
 #include <uva/xml.hpp>
 
+#include <stdexcept>
+
 #include <uva/binary.hpp>
 
 uva::xml::schema::schema(uva::xml __xml)

@@ -1,5 +1,8 @@
 #include <uva/xml.hpp>
+
 #include <string.h>
+
+#include <stdexcept>
 
 uva::xml uva::xml::decode(std::string xml_source)
 {
@@ -60,7 +63,7 @@ uva::xml uva::xml::decode(std::string_view xml_source)
     
     const char* start = xml_source.data();
     const char* it    = xml_source.data();
-    const char* end   = xml_source.end();
+    const char* end   = xml_source.data() + xml_source.size();
 
     auto advance_iterator = [&]() {
         while(it != end && isspace(*it)) {
@@ -261,7 +264,7 @@ tag_begin:
 
                         xml.childrens.push_back(std::move(child));
 
-                        it = child.source_view.end();
+                        it = child.source_view.data() + child.source_view.size();
 
                         advance_iterator();
                     }
