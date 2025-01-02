@@ -274,7 +274,11 @@ tag_begin:
                 while(end != it && *it != '<') {
                     it++;
                 }
-                xml.content = std::string_view(content_start, it - content_start);
+                const char* content_end = it;
+                while(content_end != content_start && isspace(content_end[-1])) {
+                    content_end--;
+                }
+                xml.content = std::string_view(content_start, content_end - content_start);
             }
         }
 

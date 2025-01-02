@@ -75,6 +75,25 @@ uva::xml::schema::schema(uva::xml __xml)
     }
 }
 
+std::string_view uva::xml::schema::string_attribute(const uva::xml& xml, std::string_view a)
+{
+    std::string_view value = xml.attribute(a);
+
+    if(value.empty()) {
+        for(const auto& element : elements) {
+            if(element.name == xml.tag) {
+                for(const auto& attribute : element.attributes) {
+                    if(attribute.name == a) {
+                        return attribute.default_value;
+                    }
+                }
+            }
+        }
+    }
+
+    return value;
+}
+
 int uva::xml::schema::integer_attribute(const uva::xml& xml, std::string_view a)
 {
     std::string_view value = xml.attribute(a);

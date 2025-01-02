@@ -21,7 +21,9 @@ set(UVA_PROJECT_FOLDER ${CMAKE_SOURCE_DIR})
 
 include(${UVA_MACROS_CMAKE})
 
-if(${PROJECT_IS_TOP_LEVEL})
+if(UVA_IS_TOP_LEVEL)
+    message(STATUS "Uva is the top level project")
+
     uva_library(core)
     uva_library(string)
     uva_library(json)
