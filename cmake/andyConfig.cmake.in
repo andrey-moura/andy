@@ -6,3 +6,5 @@ set(andy_INCLUDE_DIRS "@CMAKE_INSTALL_PREFIX@/include")
 set(andy_LIBRARIES andy)
 
 include("${CMAKE_CURRENT_LIST_DIR}/andyTargets.cmake")
+
+include(${CMAKE_CURRENT_LIST_DIR}/cmake/andy.cmake)
