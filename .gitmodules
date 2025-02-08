@@ -1,33 +1,6 @@
-[submodule "include/core"]
-	path = include/core
-	url = https://github.com/andrey-moura/core
-[submodule "include/string"]
-	path = include/string
-	url = https://github.com/andrey-moura/string
-[submodule "include/json"]
-	path = include/json
-	url = https://github.com/andrey-moura/json
-[submodule "include/file"]
-	path = include/file
-	url = https://github.com/andrey-moura/file
 [submodule "include/console"]
 	path = include/console
 	url = https://github.com/andrey-moura/console
-[submodule "include/binary"]
-	path = include/binary
-	url = https://github.com/andrey-moura/binary
 [submodule "include/fmt"]
 	path = include/fmt
 	url = https://github.com/fmtlib/fmt.git
-[submodule "include/uva-ui"]
-	path = include/uva-ui
-	url = https://github.com/andrey-moura/uva-ui.git
-[submodule "include/uva-drawing"]
-	path = include/uva-drawing
-	url = https://github.com/andrey-moura/uva-drawing.git
-[submodule "include/uva-widgets"]
-	path = include/uva-widgets
-	url = https://github.com/andrey-moura/uva-widgets.git
-[submodule "include/uva-tests"]
-	path = include/uva-tests
-	url = https://github.com/andrey-moura/uva-tests.git
