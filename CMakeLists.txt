@@ -3,6 +3,8 @@ cmake_minimum_required(VERSION 3.16)
 
 set(CMAKE_CXX_STANDARD 20)
 
+set(ANDY_PROJECT_VERSION 1.0.0)
+
 project(uva)
 
 # Commum libs
@@ -36,14 +38,6 @@ if(UVA_IS_TOP_LEVEL)
     uva_library(uva-widgets)
 endif()
 
-execute_process(
-    COMMAND git submodule init
-    WORKING_DIRECTORY ${UVA_ROOT_DIR}
-    RESULT_VARIABLE RESULT
-    OUTPUT_VARIABLE OUTPUT
-    ERROR_VARIABLE ERROR
-)
-
 # FMT is mandatory under Linux
 if(UNIX)
     execute_process(
@@ -71,3 +65,29 @@ endforeach()
 
 install(FILES     ${CMAKE_CURRENT_LIST_DIR}/include/uva.hpp DESTINATION include)
 install(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/include/uva     DESTINATION include)
+
+install(EXPORT andyTargets
+    FILE andyTargets.cmake
+    NAMESPACE andy::
+    DESTINATION lib/cmake/andy
+)
+
+include(CMakePackageConfigHelpers)
+
+write_basic_package_version_file(
+    ${CMAKE_BINARY_DIR}/andyConfigVersion.cmake
+    VERSION ${ANDY_PROJECT_VERSION}
+    COMPATIBILITY SameMajorVersion
+)
+
+configure_file(
+    ${CMAKE_CURRENT_LIST_DIR}/cmake/andyConfig.cmake.in
+    ${CMAKE_BINARY_DIR}/andyConfig.cmake
+    @ONLY
+)
+
+install(FILES
+    ${CMAKE_BINARY_DIR}/andyConfig.cmake
+    ${CMAKE_BINARY_DIR}/andyConfigVersion.cmake
+    DESTINATION lib/cmake/andy
+)
