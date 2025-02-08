@@ -1,13 +1,13 @@
 #Require a minimum version
 cmake_minimum_required(VERSION 3.16)
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 
 set(ANDY_PROJECT_VERSION 1.0.0)
 
-project(uva)
+project(andy VERSION ${ANDY_PROJECT_VERSION})
 
-# Commum libs
+# Common libs
 find_package(Threads)
 
 # Optional libs
@@ -21,38 +21,20 @@ set(UVA_MACROS_CMAKE ${UVA_ROOT_DIR}/uva.cmake)
 
 set(UVA_PROJECT_FOLDER ${CMAKE_SOURCE_DIR})
 
-include(${UVA_MACROS_CMAKE})
-
-if(UVA_IS_TOP_LEVEL)
-    message(STATUS "Uva is the top level project")
-
-    uva_library(core)
-    uva_library(string)
-    uva_library(json)
-    uva_library(file)
-    uva_library(console)
-    uva_library(binary)
-    uva_library(xml)
-    uva_library(uva-tests)
-    uva_library(uva-drawing)
-    uva_library(uva-widgets)
-endif()
-
-# FMT is mandatory under Linux
-if(UNIX)
-    execute_process(
-        COMMAND git submodule update include/fmt
-        WORKING_DIRECTORY ${UVA_ROOT_DIR}
-        RESULT_VARIABLE RESULT
-        OUTPUT_VARIABLE OUTPUT
-        ERROR_VARIABLE ERROR
-    )
-endif()
-
 include_directories(${CMAKE_CURRENT_LIST_DIR}/include/)
 include_directories(${CMAKE_CURRENT_LIST_DIR}/include/fmt/include)
-# Copy the folder src/icons to the build directory
 
+add_executable(andy-pm
+    ${CMAKE_CURRENT_LIST_DIR}/src/andy_pm.cpp
+)
+
+include(include/console/CMakeLists.txt)
+
+target_link_libraries(andy-pm
+    uva-console
+)
+
+# Copy the folder src/icons to the build directory
 file(GLOB UVA_RESOURCES "${CMAKE_SOURCE_DIR}/uva-resources/*")
 
 foreach(file ${UVA_RESOURCES})
@@ -65,6 +47,8 @@ endforeach()
 
 install(FILES     ${CMAKE_CURRENT_LIST_DIR}/include/uva.hpp DESTINATION include)
 install(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/include/uva     DESTINATION include)
+
+install(TARGETS andy-pm EXPORT andyTargets RUNTIME DESTINATION bin)
 
 install(EXPORT andyTargets
     FILE andyTargets.cmake
