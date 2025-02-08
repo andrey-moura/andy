@@ -68,3 +68,6 @@ foreach(file ${UVA_RESOURCES})
         configure_file(${file} ${CMAKE_BINARY_DIR} COPYONLY)
     endif()
 endforeach()
+
+install(FILES     ${CMAKE_CURRENT_LIST_DIR}/include/uva.hpp DESTINATION include)
+install(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/include/uva     DESTINATION include)
