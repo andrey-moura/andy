@@ -175,7 +175,7 @@ int main(int argc, char* argv[]) {
 
     std::cout << std::endl;
 
-    std::filesystem::path repository_folder = src_dir / provider / package;
+    std::filesystem::path repository_folder = src_dir / package;
 
     if(!update_only) {
         std::string repository_url = std::format("https://www.github.com/{}/{}", provider, package);
