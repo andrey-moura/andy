@@ -28,12 +28,6 @@ add_executable(andy-pm
     ${CMAKE_CURRENT_LIST_DIR}/src/andy_pm.cpp
 )
 
-include(include/console/CMakeLists.txt)
-
-target_link_libraries(andy-pm
-    uva-console
-)
-
 # Copy the folder src/icons to the build directory
 file(GLOB UVA_RESOURCES "${CMAKE_SOURCE_DIR}/uva-resources/*")
 

@@ -8,8 +8,6 @@
 #   include <unistd.h>
 #endif
 
-#include <console.hpp>
-
 std::vector<std::string> trusted_providers = {
     "andrey-moura",
 };
@@ -22,6 +20,30 @@ std::string invocation;
 
 bool debug = false;
 bool recursive = false;
+
+void print_success(const std::string& message) {
+#ifdef __linux__
+    std::cout << "\033[32m" << message << "\033[0m" << std::endl;
+#else
+    std::cout << message << std::endl;
+#endif
+}
+
+void print_error(const std::string& message) {
+#ifdef __linux__
+    std::cerr << "\033[31m" << message << "\033[0m" << std::endl;
+#else
+    std::cerr << message << std::endl;
+#endif
+}
+
+void print_warning(const std::string& message) {
+#ifdef __linux__
+    std::cerr << "\033[33m" << message << "\033[0m" << std::endl;
+#else
+    std::cerr << message << std::endl;
+#endif
+}
 
 int system_quiet(const std::string& command, std::string* __output = nullptr) {
     std::string actual_command = command + " > " + temp.string() + " 2>&1";
@@ -75,17 +97,17 @@ int install_dependency(const std::string& dependency_name) {
 
             int result = system_quiet(std::format("{} {} -r", invocation, dependency_name));
             if(result) {
-                uva::console::log_error(" Failed");
+                print_error(" Failed");
                 std::cout << std::endl;
 
                 std::cout << "See " << temp.string() << " or run with -d (or --debug) for more information" << std::endl;
 
                 return result;
             } else {
-                uva::console::log_success(" Ok");
+                print_success(" Ok");
             }
         } else {
-            uva::console::log_error(" Missing");
+            print_error(" Missing");
             return 1;
         }
     }
@@ -144,9 +166,9 @@ int main(int argc, char* argv[]) {
     std::cout << "Provider: " << provider;
 
     if(std::find(trusted_providers.begin(), trusted_providers.end(), provider) != trusted_providers.end()) {
-        uva::console::log_success(" (trusted)");
+        print_success(" (trusted)");
     } else {
-        uva::console::log_warning(" (untrusted)");
+        print_warning(" (untrusted)");
     }
     
     std::cout << "Package:  " << package << std::endl;
@@ -157,10 +179,10 @@ int main(int argc, char* argv[]) {
     std::cout << "Checking for sudo permissions...";
 
     if(geteuid()) {
-        uva::console::log_error(" Run as sudo");
+        print_error(" Run as sudo");
         return 1;
     }
-    uva::console::log_success(" Ok");
+    print_success(" Ok");
 #endif
 
     std::cout << "Checking for git...";
@@ -168,22 +190,22 @@ int main(int argc, char* argv[]) {
     int git_version = system_quiet("git --version");
 
     if(git_version) {
-        uva::console::log_warning("Git is not installed or not in your PATH");
+        print_warning("Git is not installed or not in your PATH");
         return git_version;
     }
 
-    uva::console::log_success(" Ok");
+    print_success(" Ok");
 
     std::cout << "Checking for CMake...";
 
     int cmake_version = system_quiet("cmake --version");
 
     if(cmake_version) {
-        uva::console::log_warning("CMake is not installed or not in your PATH");
+        print_warning("CMake is not installed or not in your PATH");
         return cmake_version;
     }
 
-    uva::console::log_success(" Ok");
+    print_success(" Ok");
 
     std::cout << std::endl;
 
@@ -202,7 +224,7 @@ int main(int argc, char* argv[]) {
         
         int result = system_quiet(command.c_str());
 
-        uva::console::log_success(" Ok");
+        print_success(" Ok");
 
         std::cout << std::endl;
     }
@@ -216,14 +238,14 @@ int main(int argc, char* argv[]) {
         int result = system_quiet("git pull", &output);
 
         if(result) {
-            uva::console::log_error(" Failed");
+            print_error(" Failed");
             std::cout << std::endl;
 
             std::cout << "See " << temp.string() << " or run with -d (or --debug) for more information" << std::endl;
 
             return result;
         } else {
-            uva::console::log_success(" Ok");
+            print_success(" Ok");
         }
 
         std::cout << std::endl;
@@ -231,50 +253,25 @@ int main(int argc, char* argv[]) {
 
     std::cout << "Checking dependencies..." << std::endl;
 
-    std::filesystem::path package_file = repository_folder / "uva-pm.json";
+    std::filesystem::path package_file = repository_folder / "uva-pm.txt";
 
-    // if(std::filesystem::exists(package_file)) {
-    //     std::string content = uva::file::read_all_text<char>(package_file);
+    if(std::filesystem::exists(package_file)) {
+        std::ifstream file(package_file);
+        std::string line;
+        while(std::getline(file, line)) {
+            if(line.empty()) {
+                continue;
+            }
 
-    //     var package_json = uva::json::decode(content);
+            int result = install_dependency(line);
 
-    //     var dependencies = package_json["dependencies"];
-
-    //     if(dependencies) {
-    //         if(!dependencies.is_a<var::array>()) {
-    //             uva::console::log_error("Dependencies must be an array");
-    //             return 1;
-    //         }
-    //         for(auto& dependency : dependencies.as<var::array>()) {
-    //             if(!dependency.is_a<var::string>()) {
-    //                 uva::console::log_error("Dependencies must be strings");
-    //                 return 1;
-    //             }
-
-    //             if(!recursive) {
-    //                 has_unresolved_dependencies = true;
-    //                 break;
-    //             }
-
-    //             const std::string& dependency_name = dependency.as<var::string>();
-
-    //             int result = install_dependency(dependency_name);
-
-    //             if(result) {
-    //                 uva::console::log_error(" Failed");
-    //             } else {
-    //                 uva::console::log_success(" Ok");
-    //             }
-    //         }
-
-    //         std::cout << std::endl;
-
-    //         if(has_unresolved_dependencies) {
-    //             uva::console::log_error("Unresolved dependencies. If you want to recursively install dependencies, use the -r (or --recursive) flag");
-    //             return 1;
-    //         }
-    //     }
-    // }
+            if(result) {
+                print_error(" Failed");
+            } else {
+                print_success(" Ok");
+            }
+        }
+    }
 
     navigate(repository_folder);
 
