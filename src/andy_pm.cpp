@@ -112,6 +112,7 @@ int install_dependency(const std::string& dependency_name) {
         }
     } else {
         print_success(" Met");
+        return 0;
     }
 
     return 1;
