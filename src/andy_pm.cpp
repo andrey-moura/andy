@@ -88,6 +88,7 @@ int install_dependency(const std::string& dependency_name) {
 
 int main(int argc, char* argv[]) {
     bool has_unresolved_dependencies = false;
+    bool update_only = false;
     current_path = std::filesystem::current_path();
     
     invocation = argv[0];
@@ -109,8 +110,9 @@ int main(int argc, char* argv[]) {
         }
         else if(arg == "-d" || arg == "--debug") {
             debug = true;
+        } else if(arg == "-u" || arg == "--update") {
+            update_only = true;
         }
-
     }
 
     std::string_view provider_package = argv[1];
@@ -173,30 +175,53 @@ int main(int argc, char* argv[]) {
 
     std::cout << std::endl;
 
-    std::string repository_url = std::format("https://www.github.com/{}/{}", provider, package);
-
-    std::cout << "Cloning " << repository_url << "...";
-
-#ifdef __linux__
-    src_dir = std::filesystem::absolute("/usr/local/src");
-#else
-    throw std::runtime_error("Not implemented");
-#endif
     std::filesystem::path repository_folder = src_dir / provider / package;
 
-    if(std::filesystem::exists(repository_folder)) {
-        std::filesystem::remove_all(repository_folder);
+    if(!update_only) {
+        std::string repository_url = std::format("https://www.github.com/{}/{}", provider, package);
+
+        std::cout << "Cloning " << repository_url << "...";
+
+#ifdef __linux__
+        src_dir = std::filesystem::absolute("/usr/local/src");
+#else
+        throw std::runtime_error("Not implemented");
+#endif
+
+        if(std::filesystem::exists(repository_folder)) {
+            std::filesystem::remove_all(repository_folder);
+        }
+
+        std::string command = std::format("git clone {} {} --recursive", repository_url, repository_folder.string());
+        
+        int result = system_quiet(command.c_str());
+
+        uva::console::log_success(" Ok");
+
+        std::cout << std::endl;
     }
 
-    std::string command = std::format("git clone {} {} --recursive", repository_url, repository_folder.string());
-    
-    int result = system_quiet(command.c_str());
-
-    uva::console::log_success(" Ok");
-
-    std::cout << std::endl;
-
     std::filesystem::current_path(repository_folder);
+
+    if(update_only) {
+        std::cout << "Updating " << package << "..." << std::endl;
+
+        std::string output;
+        int result = system_quiet("git pull", &output);
+
+        if(result) {
+            uva::console::log_error(" Failed");
+            std::cout << std::endl;
+
+            std::cout << "See " << temp.string() << " or run with -d (or --debug) for more information" << std::endl;
+
+            return result;
+        } else {
+            uva::console::log_success(" Ok");
+        }
+
+        std::cout << std::endl;
+    }
 
     std::cout << "Checking dependencies..." << std::endl;
 
