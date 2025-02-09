@@ -254,7 +254,7 @@ int main(int argc, char* argv[]) {
         std::cout << std::endl;
     }
 
-    std::cout << "Checking dependencies..." << std::endl;
+    std::cout << "Checking dependencies...";
 
     bool has_dependencies = false;
 
@@ -268,7 +268,10 @@ int main(int argc, char* argv[]) {
                 continue;
             }
 
-            has_dependencies = true;
+            if(!has_dependencies) {
+                std::cout << std::endl;
+                has_dependencies = true;
+            }
 
             int result = install_dependency(line);
 
@@ -279,7 +282,7 @@ int main(int argc, char* argv[]) {
     }
 
     if(!has_dependencies) {
-        print_warning("None");
+        print_success(" None");
     }
 
     navigate(repository_folder);
