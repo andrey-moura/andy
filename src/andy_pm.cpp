@@ -266,9 +266,7 @@ int main(int argc, char* argv[]) {
             int result = install_dependency(line);
 
             if(result) {
-                print_error(" Failed");
-            } else {
-                print_success(" Ok");
+                return result;
             }
         }
     }
