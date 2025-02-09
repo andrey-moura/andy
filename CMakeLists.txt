@@ -45,7 +45,6 @@ foreach(file ${UVA_RESOURCES})
     endif()
 endforeach()
 
-install(FILES     ${CMAKE_CURRENT_LIST_DIR}/include/uva.hpp DESTINATION include)
 install(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/include/uva     DESTINATION include)
 install(FILES ${CMAKE_CURRENT_LIST_DIR}/cmake/andy.cmake DESTINATION lib/cmake/andy/cmake)
 
