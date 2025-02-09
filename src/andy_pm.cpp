@@ -96,6 +96,11 @@ int install_dependency(const std::string& dependency_name) {
 int main(int argc, char* argv[]) {
     bool has_unresolved_dependencies = false;
     bool update_only = false;
+#ifdef __linux__
+    src_dir = std::filesystem::absolute("/usr/local/src");
+#else
+    throw std::runtime_error("Not implemented");
+#endif
     current_path = std::filesystem::current_path();
     
     invocation = argv[0];
@@ -189,12 +194,6 @@ int main(int argc, char* argv[]) {
 
         std::cout << "Cloning " << repository_url << "...";
 
-#ifdef __linux__
-        src_dir = std::filesystem::absolute("/usr/local/src");
-#else
-        throw std::runtime_error("Not implemented");
-#endif
-
         if(std::filesystem::exists(repository_folder)) {
             std::filesystem::remove_all(repository_folder);
         }
@@ -211,7 +210,7 @@ int main(int argc, char* argv[]) {
     navigate(repository_folder);
 
     if(update_only) {
-        std::cout << "Updating " << package << "..." << std::endl;
+        std::cout << "Updating " << package << "...";
 
         std::string output;
         int result = system_quiet("git pull", &output);
