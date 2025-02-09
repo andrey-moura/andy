@@ -1,6 +1,3 @@
-[submodule "include/console"]
-	path = include/console
-	url = https://github.com/andrey-moura/console
 [submodule "include/uva/fmt"]
 	path = include/uva/fmt
 	url = https://github.com/fmtlib/fmt.git
