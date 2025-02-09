@@ -110,6 +110,8 @@ int install_dependency(const std::string& dependency_name) {
             print_error(" Missing");
             return 1;
         }
+    } else {
+        print_success(" Met");
     }
 
     return 1;
@@ -253,6 +255,8 @@ int main(int argc, char* argv[]) {
 
     std::cout << "Checking dependencies..." << std::endl;
 
+    bool has_dependencies = false;
+
     std::filesystem::path package_file = repository_folder / "uva-pm.txt";
 
     if(std::filesystem::exists(package_file)) {
@@ -263,12 +267,18 @@ int main(int argc, char* argv[]) {
                 continue;
             }
 
+            has_dependencies = true;
+
             int result = install_dependency(line);
 
             if(result) {
                 return result;
             }
         }
+    }
+
+    if(!has_dependencies) {
+        print_warning("None");
     }
 
     navigate(repository_folder);
