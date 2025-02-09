@@ -282,15 +282,15 @@ int main(int argc, char* argv[]) {
 
     std::filesystem::create_directory("build");
 
-    if(!system("cmake -S . -B build")) {
+    if(system("cmake -S . -B build")) {
         return 1;
     }
 
-    if(!system("cmake --build build --config Release --parallel")) {
+    if(system("cmake --build build --config Release --parallel")) {
         return 1;
     }
 
-    if(!system("cmake --install build")) {
+    if(system("cmake --install build")) {
         return 1;
     }
 
