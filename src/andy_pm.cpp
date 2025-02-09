@@ -55,6 +55,13 @@ int system_quiet(const std::string& command, std::string* __output = nullptr) {
     return result;
 }
 
+void navigate(const std::filesystem::path& path) {
+    if(debug) {
+        std::cout << "Navigating to " << path.string() << std::endl;
+    }
+    std::filesystem::current_path(path);
+}
+
 int install_dependency(const std::string& dependency_name) {
     std::filesystem::path dependency_path = src_dir / dependency_name;
 
@@ -62,7 +69,7 @@ int install_dependency(const std::string& dependency_name) {
 
     if(!std::filesystem::exists(dependency_path)) {
         if(recursive) {
-            std::filesystem::current_path(current_path);
+            navigate(current_path);
 
             std::cout << " Installing...";
 
@@ -201,7 +208,7 @@ int main(int argc, char* argv[]) {
         std::cout << std::endl;
     }
 
-    std::filesystem::current_path(repository_folder);
+    navigate(repository_folder);
 
     if(update_only) {
         std::cout << "Updating " << package << "..." << std::endl;
@@ -270,7 +277,7 @@ int main(int argc, char* argv[]) {
     //     }
     // }
 
-    std::filesystem::current_path(repository_folder);
+    navigate(repository_folder);
 
     std::cout << "Building " << package << "..." << std::endl;
 
