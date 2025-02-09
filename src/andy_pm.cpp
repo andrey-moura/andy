@@ -105,6 +105,7 @@ int install_dependency(const std::string& dependency_name) {
                 return result;
             } else {
                 print_success(" Ok");
+                return 0;
             }
         } else {
             print_error(" Missing");
