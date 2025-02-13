@@ -40,6 +40,7 @@ foreach(file ${UVA_RESOURCES})
 endforeach()
 
 install(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/include/uva     DESTINATION include)
+install(FILES ${CMAKE_CURRENT_LIST_DIR}/include/uva.hpp     DESTINATION include)
 install(FILES ${CMAKE_CURRENT_LIST_DIR}/cmake/andy.cmake DESTINATION lib/cmake/andy/cmake)
 
 install(TARGETS andy-pm EXPORT andyTargets RUNTIME DESTINATION bin)
