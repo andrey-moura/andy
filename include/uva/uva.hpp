@@ -17,12 +17,11 @@
 
 #ifdef _MSC_VER 
     #define __UVA_WIN__
-#endif
-
-#ifdef _MSC_VER 
     #define UVA_FUNCTION_NAME __func__
+    #define ANDY_EXPORT_SYMBOL __declspec(dllexport)
 #else
-   #define UVA_FUNCTION_NAME __PRETTY_FUNCTION__
+    #define ANDY_EXPORT_SYMBOL __attribute__((visibility("default")))
+    #define UVA_FUNCTION_NAME __PRETTY_FUNCTION__
 #endif
 
 #if __cplusplus >= 202002L
