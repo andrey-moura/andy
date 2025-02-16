@@ -144,8 +144,9 @@ int main(int argc, char* argv[]) {
 
     std::vector<std::string_view> extensions_to_copy_in_build_folder;
     
+    std::filesystem::path build_dir;
 #ifdef __linux__
-    std::filesystem::path build_dir = path / "build";
+    build_dir = path / "build";
     extensions_to_copy_in_build_folder = {""};
 #else
     std::cerr << "Not implemented." << std::endl;
