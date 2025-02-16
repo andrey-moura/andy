@@ -24,7 +24,7 @@ set(UVA_PROJECT_FOLDER ${CMAKE_SOURCE_DIR})
 include_directories(${CMAKE_CURRENT_LIST_DIR}/include/)
 include_directories(${CMAKE_CURRENT_LIST_DIR}/include/fmt/include)
 
-if(UVA_IS_TOP_LEVEL)
+if(andy_IS_TOP_LEVEL)
     add_executable(andy-pm
         ${CMAKE_CURRENT_LIST_DIR}/src/andy_pm.cpp
     )
@@ -44,8 +44,8 @@ endforeach()
 install(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/include/uva     DESTINATION include)
 install(FILES ${CMAKE_CURRENT_LIST_DIR}/include/uva.hpp     DESTINATION include)
 install(FILES ${CMAKE_CURRENT_LIST_DIR}/cmake/andy.cmake DESTINATION lib/cmake/andy/cmake)
-if(UVA_IS_TOP_LEVEL)
-    install(TARGETS andy-pm EXPORT andyTargets RUNTIME DESTINATION bin)
+if(andy_IS_TOP_LEVEL)
+    install(TARGETS andy-pm       EXPORT andyTargets RUNTIME DESTINATION bin)
     install(EXPORT andyTargets
         FILE andyTargets.cmake
         NAMESPACE andy::
