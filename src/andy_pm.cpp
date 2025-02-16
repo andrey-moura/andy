@@ -141,7 +141,7 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    for(size_t i = 2; i < argc; i++) {
+    for(size_t i = 0; i < argc; i++) {
         std::string_view arg = argv[i];
         if(arg == "-r" || arg == "--recursive") {
             recursive = true;
@@ -150,6 +150,9 @@ int main(int argc, char* argv[]) {
             debug = true;
         } else if(arg == "-u" || arg == "--update") {
             update_only = true;
+        } else if(arg == "-v" || arg == "--version") {
+            std::cout << ANDY_VERSION << std::endl;
+            return 0;
         }
     }
 

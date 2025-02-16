@@ -3,7 +3,8 @@ cmake_minimum_required(VERSION 3.16)
 
 set(CMAKE_CXX_STANDARD 23)
 
-set(ANDY_PROJECT_VERSION 1.0.0)
+# read VERSION
+file(READ ${CMAKE_CURRENT_LIST_DIR}/VERSION ANDY_PROJECT_VERSION)
 
 project(andy VERSION ${ANDY_PROJECT_VERSION})
 
@@ -15,6 +16,7 @@ find_package(Threads)
 find_package(OpenSSL)
 
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D__UVA_DEBUG__")
+add_definitions(-DANDY_VERSION="${ANDY_PROJECT_VERSION}")
 
 set(UVA_ROOT_DIR ${CMAKE_CURRENT_LIST_DIR})
 set(UVA_MACROS_CMAKE ${UVA_ROOT_DIR}/uva.cmake)
@@ -27,6 +29,9 @@ include_directories(${CMAKE_CURRENT_LIST_DIR}/include/fmt/include)
 if(andy_IS_TOP_LEVEL)
     add_executable(andy-pm
         ${CMAKE_CURRENT_LIST_DIR}/src/andy_pm.cpp
+    )
+    add_executable(andy-pkgr
+        ${CMAKE_CURRENT_LIST_DIR}/src/andy_pkgr.cpp
     )
 endif()
 
@@ -46,6 +51,7 @@ install(FILES ${CMAKE_CURRENT_LIST_DIR}/include/uva.hpp     DESTINATION include)
 install(FILES ${CMAKE_CURRENT_LIST_DIR}/cmake/andy.cmake DESTINATION lib/cmake/andy/cmake)
 if(andy_IS_TOP_LEVEL)
     install(TARGETS andy-pm       EXPORT andyTargets RUNTIME DESTINATION bin)
+    install(TARGETS andy-pkgr     EXPORT andyTargets RUNTIME DESTINATION bin)
     install(EXPORT andyTargets
         FILE andyTargets.cmake
         NAMESPACE andy::
