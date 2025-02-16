@@ -24,9 +24,11 @@ set(UVA_PROJECT_FOLDER ${CMAKE_SOURCE_DIR})
 include_directories(${CMAKE_CURRENT_LIST_DIR}/include/)
 include_directories(${CMAKE_CURRENT_LIST_DIR}/include/fmt/include)
 
-add_executable(andy-pm
-    ${CMAKE_CURRENT_LIST_DIR}/src/andy_pm.cpp
-)
+if(UVA_IS_TOP_LEVEL)
+    add_executable(andy-pm
+        ${CMAKE_CURRENT_LIST_DIR}/src/andy_pm.cpp
+    )
+endif()
 
 # Copy the folder src/icons to the build directory
 file(GLOB UVA_RESOURCES "${CMAKE_SOURCE_DIR}/uva-resources/*")
@@ -42,15 +44,14 @@ endforeach()
 install(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/include/uva     DESTINATION include)
 install(FILES ${CMAKE_CURRENT_LIST_DIR}/include/uva.hpp     DESTINATION include)
 install(FILES ${CMAKE_CURRENT_LIST_DIR}/cmake/andy.cmake DESTINATION lib/cmake/andy/cmake)
-
-install(TARGETS andy-pm EXPORT andyTargets RUNTIME DESTINATION bin)
-
-install(EXPORT andyTargets
-    FILE andyTargets.cmake
-    NAMESPACE andy::
-    DESTINATION lib/cmake/andy
-)
-
+if(UVA_IS_TOP_LEVEL)
+    install(TARGETS andy-pm EXPORT andyTargets RUNTIME DESTINATION bin)
+    install(EXPORT andyTargets
+        FILE andyTargets.cmake
+        NAMESPACE andy::
+        DESTINATION lib/cmake/andy
+    )
+endif()
 include(CMakePackageConfigHelpers)
 
 write_basic_package_version_file(
