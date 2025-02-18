@@ -6,16 +6,20 @@
 
 int main(int argc, char* argv[]) {
 
+    bool push = false;
     int version_to_update = -1;
 
     for(int i = 1; i < argc; i++) {
         std::string_view arg = argv[i];
-        if(arg == "-m" || arg == "--major") {
+        if(arg == "--major") {
             version_to_update = 0;
-        } else if(arg == "-n" || arg == "--minor") {
+        } else if(arg == "--minor") {
             version_to_update = 1;
-        } else if(arg == "-p" || arg == "--patch") {
+        } else if(arg == "--patch") {
             version_to_update = 2;
+        }
+        else if(arg == "--push") {
+            push = true;
         } else {
             std::cerr << "Invalid argument: '" << arg << "'" << std::endl;
             return 1;
@@ -176,11 +180,39 @@ int main(int argc, char* argv[]) {
     std::ofstream version_file(src_dir / "VERSION", std::ios::trunc);
     version_file << version_str;
     version_file.close();
+#ifdef __linux__
     std::string command = "dpkg-deb --build " + version_folder.string();
     if(system(command.c_str())) {
         return 1;
     }
+#else
+    std::cerr << "Not implemented." << std::endl;
+    return 1;
+#endif
     std::filesystem::copy_file(src_dir / "VERSION", path / "VERSION", std::filesystem::copy_options::overwrite_existing);
     std::filesystem::remove_all(version_folder);
+
+    if(push) {
+        // ssh to server
+#ifdef __linux__
+        std::string ssh_target = "ubuntu@andy-lang.org";
+        std::string folder = "/home/ubuntu/releases/" + package_name + "/" + version_str;
+        // Create the folder on the server
+        std::string command = "ssh ubuntu@andy-lang.org 'mkdir -p " + folder + "'";
+        std::cout << "Creating folder on server..." << std::endl;
+        if(system(command.c_str())) {
+            return 1;
+        }
+        command = "scp " + version_folder.string() + ".deb " + ssh_target + ":" + folder + "/" + version_folder.filename().string() + ".deb";
+        std::cout << "Pushing to server..." << std::endl;
+        if(system(command.c_str())) {
+            return 1;
+        }
+        return 0;
+#else
+        std::cerr << "Not implemented." << std::endl;
+        return 1;
+#endif
+    }
     return 0;
 }
