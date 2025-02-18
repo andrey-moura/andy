@@ -16,7 +16,10 @@ find_package(Threads)
 find_package(OpenSSL)
 
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D__UVA_DEBUG__")
-add_definitions(-DANDY_VERSION="${ANDY_PROJECT_VERSION}")
+add_compile_definitions(ANDY_VERSION="${ANDY_PROJECT_VERSION}")
+add_compile_definitions(ANDY_BUILD_TYPE="${CMAKE_BUILD_TYPE}")
+add_compile_definitions(ANDY_CPP_VERSION="${CMAKE_CXX_STANDARD}")
+add_compile_definitions(ANDY_COMPILER="${CMAKE_CXX_COMPILER_ID}")
 
 set(UVA_ROOT_DIR ${CMAKE_CURRENT_LIST_DIR})
 set(UVA_MACROS_CMAKE ${UVA_ROOT_DIR}/uva.cmake)
