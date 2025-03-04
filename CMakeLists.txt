@@ -58,10 +58,10 @@ foreach(file ${UVA_RESOURCES})
     endif()
 endforeach()
 
-install(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/include/uva     DESTINATION include)
-install(FILES ${CMAKE_CURRENT_LIST_DIR}/include/uva.hpp     DESTINATION include)
-install(FILES ${CMAKE_CURRENT_LIST_DIR}/cmake/andy.cmake DESTINATION lib/cmake/andy/cmake)
 if(ANDY_IS_TOP_LEVEL)
+    install(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/include/uva     DESTINATION include)
+    install(FILES ${CMAKE_CURRENT_LIST_DIR}/include/uva.hpp     DESTINATION include)
+    install(FILES ${CMAKE_CURRENT_LIST_DIR}/cmake/andy.cmake DESTINATION lib/cmake/andy/cmake)
     install(TARGETS andy-pm       EXPORT andyTargets RUNTIME DESTINATION bin)
     install(TARGETS andy-pkgr     EXPORT andyTargets RUNTIME DESTINATION bin)
     install(EXPORT andyTargets
@@ -69,23 +69,23 @@ if(ANDY_IS_TOP_LEVEL)
         NAMESPACE andy::
         DESTINATION lib/cmake/andy
     )
+    include(CMakePackageConfigHelpers)
+
+    write_basic_package_version_file(
+        ${CMAKE_BINARY_DIR}/andyConfigVersion.cmake
+        VERSION ${ANDY_PROJECT_VERSION}
+        COMPATIBILITY SameMajorVersion
+    )
+
+    configure_file(
+        ${CMAKE_CURRENT_LIST_DIR}/cmake/andyConfig.cmake.in
+        ${CMAKE_BINARY_DIR}/andyConfig.cmake
+        @ONLY
+    )
+
+    install(FILES
+        ${CMAKE_BINARY_DIR}/andyConfig.cmake
+        ${CMAKE_BINARY_DIR}/andyConfigVersion.cmake
+        DESTINATION lib/cmake/andy
+    )
 endif()
-include(CMakePackageConfigHelpers)
-
-write_basic_package_version_file(
-    ${CMAKE_BINARY_DIR}/andyConfigVersion.cmake
-    VERSION ${ANDY_PROJECT_VERSION}
-    COMPATIBILITY SameMajorVersion
-)
-
-configure_file(
-    ${CMAKE_CURRENT_LIST_DIR}/cmake/andyConfig.cmake.in
-    ${CMAKE_BINARY_DIR}/andyConfig.cmake
-    @ONLY
-)
-
-install(FILES
-    ${CMAKE_BINARY_DIR}/andyConfig.cmake
-    ${CMAKE_BINARY_DIR}/andyConfigVersion.cmake
-    DESTINATION lib/cmake/andy
-)
