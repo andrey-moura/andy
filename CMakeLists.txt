@@ -27,6 +27,7 @@ set(UVA_MACROS_CMAKE ${UVA_ROOT_DIR}/uva.cmake)
 set(UVA_PROJECT_FOLDER ${CMAKE_SOURCE_DIR})
 
 include_directories(${CMAKE_CURRENT_LIST_DIR}/include/)
+include_directories(${CMAKE_CURRENT_LIST_DIR}/include/uva/xml)
 include_directories(${CMAKE_CURRENT_LIST_DIR}/include/fmt/include)
 
 # Extracts the folder from CMAKE_SOURCE_DIR

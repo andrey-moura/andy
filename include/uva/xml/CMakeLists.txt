@@ -7,13 +7,9 @@ project(uva-xml)
 
 include_directories(${CMAKE_CURRENT_LIST_DIR})
 
-add_library(uva-xml
+add_library(uva-xml OBJECT
     ${CMAKE_CURRENT_LIST_DIR}/src/xml.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/schema.cpp
-)
-
-target_link_libraries(uva-xml
-    uva-core
 )
 
 # uva_tests_configure(uva-xml)
