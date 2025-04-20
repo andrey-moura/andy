@@ -181,8 +181,8 @@ int main(int argc, char* argv[]) {
     control << "Architecture: all" << std::endl;
 #endif
     std::ofstream version_file(src_dir / "VERSION", std::ios::trunc);
-    version_file << version_str;
-    version_file.close();
+    // version_file << version_str;
+    // version_file.close();
 #ifdef __linux__
     std::string command = "dpkg-deb --build " + version_folder.string();
     if(system(command.c_str())) {
@@ -192,7 +192,7 @@ int main(int argc, char* argv[]) {
     std::cerr << "Not implemented." << std::endl;
     return 1;
 #endif
-    std::filesystem::copy_file(src_dir / "VERSION", path / "VERSION", std::filesystem::copy_options::overwrite_existing);
+    //std::filesystem::copy_file(src_dir / "VERSION", path / "VERSION", std::filesystem::copy_options::overwrite_existing);
     std::filesystem::remove_all(version_folder);
 
     if(push) {
