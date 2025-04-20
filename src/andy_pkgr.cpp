@@ -111,7 +111,7 @@ int main(int argc, char* argv[]) {
         }
     }
     version_folder_name.push_back('-');
-    version_folder_name.append(version_str);
+    version_folder_name.append(version);
     std::filesystem::path version_folder = path / version_folder_name;
     if(std::filesystem::exists(version_folder)) {
         std::cerr << "Version folder already exists" << std::endl;
@@ -206,7 +206,7 @@ int main(int argc, char* argv[]) {
         if(system(command.c_str())) {
             return 1;
         }
-        command = "scp " + version_folder.string() + ".deb " + ssh_target + ":" + folder + "/" + version_folder.filename().string() + ".deb";
+        command = "scp " + version + ".deb " + ssh_target + ":" + folder + "/" + version_folder.filename().string() + ".deb";
         std::cout << "Pushing to server..." << std::endl;
         if(system(command.c_str())) {
             return 1;
