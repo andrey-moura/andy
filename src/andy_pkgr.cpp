@@ -52,6 +52,9 @@ int main(int argc, char* argv[]) {
         std::cout << "\tMinor: " << versions[1] << std::endl;
         std::cout << "\tPatch: " << versions[2] << std::endl;
     };
+    if(version_view.ends_with("-beta")) {
+        version_view.remove_suffix(5);
+    }
     for(int i = 0; i < 3; i++) {
         const char* start = version_view.data();
         const char* end = nullptr;
