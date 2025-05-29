@@ -58,12 +58,13 @@ namespace uva
         class schema
         {
         public:
+            schema() = default;
             schema(uva::xml xml);
         public:
             int integer_attribute(const uva::xml& xml, std::string_view a);
             std::string_view string_attribute(const uva::xml& xml, std::string_view a);
             uva::color color_attribute(const uva::xml& xml, std::string_view a);
-        protected:
+        public:
             std::shared_ptr<uva::xml> source;
             std::vector<type> types;
             std::vector<element> elements;

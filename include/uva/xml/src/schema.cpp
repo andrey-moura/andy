@@ -2,7 +2,7 @@
 
 #include <stdexcept>
 
-#include <uva/binary.hpp>
+#include <andy/binary.hpp>
 
 uva::xml::schema::schema(uva::xml __xml)
     : source(std::make_shared<uva::xml>(std::move(__xml)))
@@ -160,9 +160,9 @@ uva::color uva::xml::schema::color_attribute(const uva::xml& xml, std::string_vi
 
                             uva::color c;
 
-                            c.r = uva::binary::byte_from_hex_string(value.data() + 1);
-                            c.g = uva::binary::byte_from_hex_string(value.data() + 3);
-                            c.b = uva::binary::byte_from_hex_string(value.data() + 5);
+                            c.r = andy::binary::byte_from_hex_string(value.data() + 1);
+                            c.g = andy::binary::byte_from_hex_string(value.data() + 3);
+                            c.b = andy::binary::byte_from_hex_string(value.data() + 5);
                             c.a = 255;
 
                             return c;
