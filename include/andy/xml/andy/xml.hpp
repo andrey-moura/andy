@@ -5,9 +5,9 @@
 #include <map>
 #include <memory>
 
-#include <uva/color.hpp>
+#include "andy/color.hpp"
 
-namespace uva
+namespace andy
 {
     class enumeration
     {
@@ -59,13 +59,13 @@ namespace uva
         {
         public:
             schema() = default;
-            schema(uva::xml xml);
+            schema(andy::xml xml);
         public:
-            int integer_attribute(const uva::xml& xml, std::string_view a);
-            std::string_view string_attribute(const uva::xml& xml, std::string_view a);
-            uva::color color_attribute(const uva::xml& xml, std::string_view a);
+            int integer_attribute(const andy::xml& xml, std::string_view a);
+            std::string_view string_attribute(const andy::xml& xml, std::string_view a);
+            andy::color color_attribute(const andy::xml& xml, std::string_view a);
         public:
-            std::shared_ptr<uva::xml> source;
+            std::shared_ptr<andy::xml> source;
             std::vector<type> types;
             std::vector<element> elements;
         };

@@ -22,12 +22,12 @@ add_compile_definitions(ANDY_CPP_VERSION="${CMAKE_CXX_STANDARD}")
 add_compile_definitions(ANDY_COMPILER="${CMAKE_CXX_COMPILER_ID}")
 
 set(UVA_ROOT_DIR ${CMAKE_CURRENT_LIST_DIR})
-set(UVA_MACROS_CMAKE ${UVA_ROOT_DIR}/uva.cmake)
+set(UVA_MACROS_CMAKE ${UVA_ROOT_DIR}/andy.cmake)
 
 set(UVA_PROJECT_FOLDER ${CMAKE_SOURCE_DIR})
 
 include_directories(${CMAKE_CURRENT_LIST_DIR}/include/)
-include_directories(${CMAKE_CURRENT_LIST_DIR}/include/uva/xml)
+include_directories(${CMAKE_CURRENT_LIST_DIR}/include/andy/xml)
 include_directories(${CMAKE_CURRENT_LIST_DIR}/include/fmt/include)
 
 # Extracts the folder from CMAKE_SOURCE_DIR
@@ -50,7 +50,7 @@ add_executable(andy-pkgr
 )
 
 # Copy the folder src/icons to the build directory
-file(GLOB UVA_RESOURCES "${CMAKE_SOURCE_DIR}/uva-resources/*")
+file(GLOB UVA_RESOURCES "${CMAKE_SOURCE_DIR}/andy-resources/*")
 
 foreach(file ${UVA_RESOURCES})
     if(WIN32)
@@ -61,8 +61,8 @@ foreach(file ${UVA_RESOURCES})
 endforeach()
 
 if(ANDY_IS_TOP_LEVEL)
-    install(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/include/uva     DESTINATION include)
-    install(FILES ${CMAKE_CURRENT_LIST_DIR}/include/uva.hpp     DESTINATION include)
+    install(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/include/andy     DESTINATION include)
+    install(FILES ${CMAKE_CURRENT_LIST_DIR}/include/andy.hpp     DESTINATION include)
     install(FILES ${CMAKE_CURRENT_LIST_DIR}/cmake/andy.cmake DESTINATION lib/cmake/andy/cmake)
     install(TARGETS andy-pm       EXPORT andyTargets RUNTIME DESTINATION bin)
     install(TARGETS andy-pkgr     EXPORT andyTargets RUNTIME DESTINATION bin)

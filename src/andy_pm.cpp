@@ -3,7 +3,7 @@
 #include <filesystem>
 #include <fstream>
 #include <vector>
-#include <uva/format.hpp>
+#include <andy/format.hpp>
 #ifdef __linux__
 #   include <unistd.h>
 #endif
@@ -12,7 +12,7 @@ std::vector<std::string> trusted_providers = {
     "andrey-moura",
 };
 
-std::filesystem::path temp = std::filesystem::temp_directory_path() / "uva-pm.txt";
+std::filesystem::path temp = std::filesystem::temp_directory_path() / "andy-pm.txt";
 std::filesystem::path src_dir;
 std::filesystem::path current_path;
 
@@ -262,7 +262,7 @@ int main(int argc, char* argv[]) {
 
     bool has_dependencies = false;
 
-    std::filesystem::path package_file = repository_folder / "uva-pm.txt";
+    std::filesystem::path package_file = repository_folder / "andy-pm.txt";
 
     if(std::filesystem::exists(package_file)) {
         std::ifstream file(package_file);

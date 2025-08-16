@@ -1,17 +1,17 @@
-#include <uva/xml.hpp>
+#include <andy/xml.hpp>
 
-#include <uva/tests.hpp>
+#include <andy/tests.hpp>
 
-using namespace uva::tests;
+using namespace andy::tests;
 
 describe of(structure, "xml", ([]() {
   describe(static_method, "decode", []() {
-    auto tag_expectation = [](const uva::xml& subject, std::string_view tag) {
+    auto tag_expectation = [](const andy::xml& subject, std::string_view tag) {
       it("should have the {} tag", {tag}, [&]() {
         expect(its tag).to<eq>(tag);
       });
     };
-    auto empty_expectations = [&](const uva::xml& subject, std::string_view tag = "root", bool testing_declaration_or_model = false) {
+    auto empty_expectations = [&](const andy::xml& subject, std::string_view tag = "root", bool testing_declaration_or_model = false) {
       tag_expectation(subject, tag);
 
       it("should have no content", [&]() {
@@ -30,7 +30,7 @@ describe of(structure, "xml", ([]() {
     }; 
     auto empty_describer = [=](std::string_view xml) {
       context(std::format("decoding '{}'", xml), [=]() {
-        empty_expectations(uva::xml::decode(xml));
+        empty_expectations(andy::xml::decode(xml));
       });
     };
 
@@ -39,7 +39,7 @@ describe of(structure, "xml", ([]() {
     empty_describer("\t<root>      \n     </root>    \r        ");
 
     context("decoding xml with declaration", [=]() {
-      subject(uva::xml::decode("<?xml version=\"1.0\" encoding=\"UTF-8\"?><root></root>"));
+      subject(andy::xml::decode("<?xml version=\"1.0\" encoding=\"UTF-8\"?><root></root>"));
 
       empty_expectations(subject);
 
@@ -64,11 +64,11 @@ describe of(structure, "xml", ([]() {
       });
     });
     context("decoding xml with model", [=]() {
-      subject(uva::xml::decode("<?xml-model href=\"schema.rng\" type=\"application/xml\"?><root></root>"));
+      subject(andy::xml::decode("<?xml-model href=\"schema.rng\" type=\"application/xml\"?><root></root>"));
       empty_expectations(subject);
     });
     context("decoding xml with childreans", [=]() {
-      subject(uva::xml::decode("<root><child1/><child2/></root>"));
+      subject(andy::xml::decode("<root><child1/><child2/></root>"));
 
       tag_expectation(subject, "root");
 
@@ -85,7 +85,7 @@ describe of(structure, "xml", ([]() {
       });
     });
     context("deconding xml with content", [=]() {
-      subject(uva::xml::decode("<root>content</root>"));
+      subject(andy::xml::decode("<root>content</root>"));
 
       tag_expectation(subject, "root");
 
@@ -94,31 +94,31 @@ describe of(structure, "xml", ([]() {
       });
     });
     context("decoding xml tag with ':' character", [=]() {
-      subject(uva::xml::decode("<root:tag></root:tag>"));
+      subject(andy::xml::decode("<root:tag></root:tag>"));
       tag_expectation(subject, "root:tag");
     });
     context("decoding xml tag with '_' character", [=]() {
-      subject(uva::xml::decode("<root_tag></root_tag>"));
+      subject(andy::xml::decode("<root_tag></root_tag>"));
       tag_expectation(subject, "root_tag");
     });
     context("decoding xml tag with '-' character", [=]() {
-      subject(uva::xml::decode("<root-tag></root-tag>"));
+      subject(andy::xml::decode("<root-tag></root-tag>"));
       tag_expectation(subject, "root-tag");
     });
     context("decoding xml tag with number character", [=]() {
-      subject(uva::xml::decode("<root1></root1>"));
+      subject(andy::xml::decode("<root1></root1>"));
       tag_expectation(subject, "root1");
     });
     context("decoding xml tag with number character", [=]() {
-      subject(uva::xml::decode("<root1></root1>"));
+      subject(andy::xml::decode("<root1></root1>"));
       tag_expectation(subject, "root1");
     });
     context("decoding xml with comments", [=]() {
-      subject(uva::xml::decode("<!-- comment --><root></root>"));
+      subject(andy::xml::decode("<!-- comment --><root></root>"));
       empty_expectations(subject);
     });
     context("decoding xml with comments and childreans", [=]() {
-      subject(uva::xml::decode("<root><!-- comment --><child1/><!-- comment --><child2/></root>"));
+      subject(andy::xml::decode("<root><!-- comment --><child1/><!-- comment --><child2/></root>"));
 
       tag_expectation(subject, "root");
 

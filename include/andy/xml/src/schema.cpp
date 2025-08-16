@@ -1,13 +1,13 @@
-#include <uva/xml.hpp>
+#include <andy/xml.hpp>
 
 #include <stdexcept>
 
 #include <andy/binary.hpp>
 
-uva::xml::schema::schema(uva::xml __xml)
-    : source(std::make_shared<uva::xml>(std::move(__xml)))
+andy::xml::schema::schema(andy::xml __xml)
+    : source(std::make_shared<andy::xml>(std::move(__xml)))
 {
-    auto parse_type = [](const uva::xml& xml) {
+    auto parse_type = [](const andy::xml& xml) {
         type t;
         t.name = xml.attribute("name");
 
@@ -75,7 +75,7 @@ uva::xml::schema::schema(uva::xml __xml)
     }
 }
 
-std::string_view uva::xml::schema::string_attribute(const uva::xml& xml, std::string_view a)
+std::string_view andy::xml::schema::string_attribute(const andy::xml& xml, std::string_view a)
 {
     std::string_view value = xml.attribute(a);
 
@@ -94,7 +94,7 @@ std::string_view uva::xml::schema::string_attribute(const uva::xml& xml, std::st
     return value;
 }
 
-int uva::xml::schema::integer_attribute(const uva::xml& xml, std::string_view a)
+int andy::xml::schema::integer_attribute(const andy::xml& xml, std::string_view a)
 {
     std::string_view value = xml.attribute(a);
 
@@ -140,7 +140,7 @@ int uva::xml::schema::integer_attribute(const uva::xml& xml, std::string_view a)
     throw std::runtime_error("attribute not found");
 }
 
-uva::color uva::xml::schema::color_attribute(const uva::xml& xml, std::string_view a)
+andy::color andy::xml::schema::color_attribute(const andy::xml& xml, std::string_view a)
 {
     std::string_view value = xml.attribute(a);
 
@@ -158,7 +158,7 @@ uva::color uva::xml::schema::color_attribute(const uva::xml& xml, std::string_vi
                                 throw std::runtime_error("color must be a hex color");
                             }
 
-                            uva::color c;
+                            andy::color c;
 
                             c.r = andy::binary::byte_from_hex_string(value.data() + 1);
                             c.g = andy::binary::byte_from_hex_string(value.data() + 3);

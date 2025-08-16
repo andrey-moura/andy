@@ -3,13 +3,13 @@ cmake_minimum_required(VERSION 3.10)
 
 set(CMAKE_CXX_STANDARD 20)
 
-project(uva-xml)
+project(andy-xml)
 
 include_directories(${CMAKE_CURRENT_LIST_DIR})
 
-add_library(uva-xml OBJECT
+add_library(andy-xml OBJECT
     ${CMAKE_CURRENT_LIST_DIR}/src/xml.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/schema.cpp
 )
 
-# uva_tests_configure(uva-xml)
+# andy_tests_configure(andy-xml)

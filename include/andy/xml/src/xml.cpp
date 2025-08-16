@@ -1,27 +1,27 @@
-#include <uva/xml.hpp>
+#include <andy/xml.hpp>
 
 #include <string.h>
 
 #include <stdexcept>
 
-uva::xml uva::xml::decode(std::string xml_source)
+andy::xml andy::xml::decode(std::string xml_source)
 {
-    uva::xml xml = uva::xml::decode(std::string_view(xml_source));
+    andy::xml xml = andy::xml::decode(std::string_view(xml_source));
     xml.source = std::move(xml_source);
     return xml;
 }
 
-uva::xml uva::xml::decode(const char *xml_source)
+andy::xml andy::xml::decode(const char *xml_source)
 {
-    return uva::xml::decode(std::string_view(xml_source));
+    return andy::xml::decode(std::string_view(xml_source));
 }
 
-bool uva::xml::is_comment(const char* it, const char* end)
+bool andy::xml::is_comment(const char* it, const char* end)
 {
     return (end - it) >= 3 && it[0] == '<' && it[1] == '!' && it[2] == '-' && it[3] == '-';
 }
 
-void uva::xml::ignore_comment(const char*& it, const char* end)
+void andy::xml::ignore_comment(const char*& it, const char* end)
 {
     it += 3;
 
@@ -56,9 +56,9 @@ void uva::xml::ignore_comment(const char*& it, const char* end)
     }
 }
 
-uva::xml uva::xml::decode(std::string_view xml_source)
+andy::xml andy::xml::decode(std::string_view xml_source)
 {
-    uva::xml xml;
+    andy::xml xml;
     xml.source_view = std::string_view(xml_source);
     
     const char* start = xml_source.data();
@@ -198,7 +198,7 @@ tag_begin:
 
             std::string_view key(key_start, key_end - key_start);
             std::string_view value(value_start, it - value_start);
-            xml.attributes[uva::xml::string(key)] = uva::xml::string(value);
+            xml.attributes[andy::xml::string(key)] = andy::xml::string(value);
 
             ++it;
             advance_iterator();
@@ -236,13 +236,13 @@ tag_begin:
 
     if(is_question_mark_tag) {
         std::string_view actual_xml_view(it, end - it);
-        uva::xml actual_xml = uva::xml::decode(actual_xml_view);
+        andy::xml actual_xml = andy::xml::decode(actual_xml_view);
         actual_xml.source = std::move(xml.source);
 
         if(xml.tag == "xml") {
-            actual_xml.declaration = std::make_shared<uva::xml>(std::move(xml));
+            actual_xml.declaration = std::make_shared<andy::xml>(std::move(xml));
         } else if(xml.tag == "xml-model") {
-            actual_xml.model = std::make_shared<uva::xml>(std::move(xml));
+            actual_xml.model = std::make_shared<andy::xml>(std::move(xml));
         }
         
         return actual_xml;
@@ -260,7 +260,7 @@ tag_begin:
                         advance_iterator();
                     } else {                        
                         std::string_view xml_view(it, end - it);
-                        uva::xml child = uva::xml::decode(xml_view);
+                        andy::xml child = andy::xml::decode(xml_view);
 
                         xml.childrens.push_back(std::move(child));
 
@@ -340,7 +340,7 @@ tag_begin:
     return xml;
 }
 
-uva::xml::string uva::xml::try_attribute(uva::xml::string key)
+andy::xml::string andy::xml::try_attribute(andy::xml::string key)
 {
     auto it = attributes.find(key);
 
@@ -351,7 +351,7 @@ uva::xml::string uva::xml::try_attribute(uva::xml::string key)
     return it->second;
 }
 
-uva::xml::string uva::xml::attribute(uva::xml::string key, uva::xml::string __default) const
+andy::xml::string andy::xml::attribute(andy::xml::string key, andy::xml::string __default) const
 {
     auto it = attributes.find(key);
 
@@ -362,7 +362,7 @@ uva::xml::string uva::xml::attribute(uva::xml::string key, uva::xml::string __de
     return it->second;
 }
 
-bool uva::xml::enumerate_attribute(string key, const uva::enumeration& e, size_t& value, const std::string_view** actual) const
+bool andy::xml::enumerate_attribute(string key, const andy::enumeration& e, size_t& value, const std::string_view** actual) const
 {
     auto it = attributes.find(key);
 

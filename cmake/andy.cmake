@@ -1,3 +1,3 @@
-macro (uva_library uva_library_name)
+macro (andy_library andy_library_name)
     
 endmacro ()
