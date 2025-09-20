@@ -4,6 +4,7 @@
 #include <vector>
 #include <map>
 #include <memory>
+#include <filesystem>
 
 #include "andy/color.hpp"
 
@@ -75,6 +76,7 @@ namespace andy
         static xml decode(const char* xml_source);
         static xml decode(std::string_view xml_source);
         static xml decode(std::string xml_source);
+        static xml decode(const std::filesystem::path& xml_file);
     private:
         static bool is_comment(const char* it, const char* end);
         static void ignore_comment(const char*& it, const char* end);

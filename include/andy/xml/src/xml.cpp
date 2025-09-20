@@ -3,17 +3,38 @@
 #include <string.h>
 
 #include <stdexcept>
+#include <fstream>
 
 andy::xml andy::xml::decode(std::string xml_source)
 {
     andy::xml xml = andy::xml::decode(std::string_view(xml_source));
     xml.source = std::move(xml_source);
+    xml.source_view = std::string_view(xml.source);
     return xml;
 }
 
 andy::xml andy::xml::decode(const char *xml_source)
 {
     return andy::xml::decode(std::string_view(xml_source));
+}
+
+andy::xml andy::xml::decode(const std::filesystem::path& xml_file)
+{
+    std::ifstream file(xml_file, std::ios::in | std::ios::binary);
+
+    if(!file.is_open()) {
+        throw std::runtime_error("failed to open file: " + xml_file.string());
+    }
+
+    file.seekg(0, std::ios::end);
+    size_t size = file.tellg();
+    file.seekg(0, std::ios::beg);
+
+    std::string xml_source;
+    xml_source.resize(size);
+    file.read(xml_source.data(), size);
+
+    return andy::xml::decode(std::move(xml_source));
 }
 
 bool andy::xml::is_comment(const char* it, const char* end)
