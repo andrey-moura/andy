@@ -1,6 +1,7 @@
 #include <andy/xml.hpp>
 
 #include <stdexcept>
+#include <algorithm>
 
 #include <andy/binary.hpp>
 
