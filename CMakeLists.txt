@@ -15,7 +15,7 @@ find_package(Threads)
 # binary, networking
 find_package(OpenSSL)
 
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D__UVA_DEBUG__")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D__ANDY_DEBUG__")
 add_compile_definitions(ANDY_VERSION="${ANDY_PROJECT_VERSION}")
 add_compile_definitions(ANDY_BUILD_TYPE="${CMAKE_BUILD_TYPE}")
 add_compile_definitions(ANDY_CPP_VERSION="${CMAKE_CXX_STANDARD}")

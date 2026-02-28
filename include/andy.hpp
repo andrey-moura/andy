@@ -6,10 +6,10 @@
 #include <utility>
 
 #ifdef NDEBUG
-    #undef __UVA_DEBUG__
+    #undef __ANDY_DEBUG__
 #endif
 
-#ifdef __UVA_DEBUG__
+#ifdef __ANDY_DEBUG__
     #define __UVA_DEBUG_LEVEL_DEFAULT__ 1
 #else
     #define __UVA_DEBUG_LEVEL_DEFAULT__ 0
