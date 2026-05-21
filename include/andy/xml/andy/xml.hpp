@@ -8,7 +8,7 @@
 
 #include "andy/color.hpp"
 
-namespace andy
+namespace lavi
 {
     class enumeration
     {
@@ -60,13 +60,13 @@ namespace andy
         {
         public:
             schema() = default;
-            schema(andy::xml xml);
+            schema(lavi::xml xml);
         public:
-            int integer_attribute(const andy::xml& xml, std::string_view a);
-            std::string_view string_attribute(const andy::xml& xml, std::string_view a);
-            andy::color color_attribute(const andy::xml& xml, std::string_view a);
+            int integer_attribute(const lavi::xml& xml, std::string_view a);
+            std::string_view string_attribute(const lavi::xml& xml, std::string_view a);
+            lavi::color color_attribute(const lavi::xml& xml, std::string_view a);
         public:
-            std::shared_ptr<andy::xml> source;
+            std::shared_ptr<lavi::xml> source;
             std::vector<type> types;
             std::vector<element> elements;
         };

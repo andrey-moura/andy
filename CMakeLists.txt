@@ -68,7 +68,7 @@ if(ANDY_IS_TOP_LEVEL)
     install(TARGETS andy-pkgr     EXPORT andyTargets RUNTIME DESTINATION bin)
     install(EXPORT andyTargets
         FILE andyTargets.cmake
-        NAMESPACE andy::
+        NAMESPACE lavi::
         DESTINATION lib/cmake/andy
     )
     include(CMakePackageConfigHelpers)

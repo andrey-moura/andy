@@ -51,7 +51,7 @@
     {
         if constexpr (level == 1) {
             #if __has_include(<console.hpp>)
-                andy::console::log_warning("CHECK FAILED: {} (level {}) at file {}:{}", name, level, file, line);
+                lavi::console::log_warning("CHECK FAILED: {} (level {}) at file {}:{}", name, level, file, line);
             #endif
         }
     }
@@ -70,7 +70,7 @@
 UVA_GENERATE_CHECK(UVA_CHECK_RESERVED_BUFFER, 1, UVA_GENERATE_CHECK_PARAMS(const std::string& buffer, size_t len), if(buffer.size() > len) { UVA_CHECK_FAILED(1, "UVA_CHECK_RESERVED_BUFFER") })
 #define UVA_CHECK_RESERVED_BUFFER(buffer, len) UVA_CHECK_RESERVED_BUFFER_F(buffer, len, __FILE__, __LINE__);
 
-namespace andy
+namespace lavi
 {
     template <auto left, auto right, typename = void>
     struct function_is_same : std::false_type {};

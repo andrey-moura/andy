@@ -5,10 +5,10 @@
 
 #include <andy/binary.hpp>
 
-andy::xml::schema::schema(andy::xml __xml)
-    : source(std::make_shared<andy::xml>(std::move(__xml)))
+lavi::xml::schema::schema(lavi::xml __xml)
+    : source(std::make_shared<lavi::xml>(std::move(__xml)))
 {
-    auto parse_type = [](const andy::xml& xml) {
+    auto parse_type = [](const lavi::xml& xml) {
         type t;
         t.name = xml.attribute("name");
 
@@ -76,7 +76,7 @@ andy::xml::schema::schema(andy::xml __xml)
     }
 }
 
-std::string_view andy::xml::schema::string_attribute(const andy::xml& xml, std::string_view a)
+std::string_view lavi::xml::schema::string_attribute(const lavi::xml& xml, std::string_view a)
 {
     std::string_view value = xml.attribute(a);
 
@@ -95,7 +95,7 @@ std::string_view andy::xml::schema::string_attribute(const andy::xml& xml, std::
     return value;
 }
 
-int andy::xml::schema::integer_attribute(const andy::xml& xml, std::string_view a)
+int lavi::xml::schema::integer_attribute(const lavi::xml& xml, std::string_view a)
 {
     std::string_view value = xml.attribute(a);
 
@@ -141,7 +141,7 @@ int andy::xml::schema::integer_attribute(const andy::xml& xml, std::string_view 
     throw std::runtime_error("attribute not found");
 }
 
-andy::color andy::xml::schema::color_attribute(const andy::xml& xml, std::string_view a)
+lavi::color lavi::xml::schema::color_attribute(const lavi::xml& xml, std::string_view a)
 {
     std::string_view value = xml.attribute(a);
 
@@ -159,11 +159,11 @@ andy::color andy::xml::schema::color_attribute(const andy::xml& xml, std::string
                                 throw std::runtime_error("color must be a hex color");
                             }
 
-                            andy::color c;
+                            lavi::color c;
 
-                            c.r = andy::binary::byte_from_hex_string(value.data() + 1);
-                            c.g = andy::binary::byte_from_hex_string(value.data() + 3);
-                            c.b = andy::binary::byte_from_hex_string(value.data() + 5);
+                            c.r = lavi::binary::byte_from_hex_string(value.data() + 1);
+                            c.g = lavi::binary::byte_from_hex_string(value.data() + 3);
+                            c.b = lavi::binary::byte_from_hex_string(value.data() + 5);
                             c.a = 255;
 
                             return c;
