@@ -39,16 +39,6 @@ else()
     set(ANDY_IS_TOP_LEVEL OFF)
 endif()
 
-if(FALSE)
-    add_executable(andy-pm
-        ${CMAKE_CURRENT_LIST_DIR}/src/andy_pm.cpp
-    )
-endif()
-
-add_executable(andy-pkgr
-    ${CMAKE_CURRENT_LIST_DIR}/src/andy_pkgr.cpp
-)
-
 # Copy the folder src/icons to the build directory
 file(GLOB UVA_RESOURCES "${CMAKE_SOURCE_DIR}/andy-resources/*")
 
@@ -64,8 +54,6 @@ if(ANDY_IS_TOP_LEVEL)
     install(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/include/andy     DESTINATION include)
     install(FILES ${CMAKE_CURRENT_LIST_DIR}/include/andy.hpp     DESTINATION include)
     install(FILES ${CMAKE_CURRENT_LIST_DIR}/cmake/andy.cmake DESTINATION lib/cmake/andy/cmake)
-    install(TARGETS andy-pm       EXPORT andyTargets RUNTIME DESTINATION bin)
-    install(TARGETS andy-pkgr     EXPORT andyTargets RUNTIME DESTINATION bin)
     install(EXPORT andyTargets
         FILE andyTargets.cmake
         NAMESPACE lavi::
